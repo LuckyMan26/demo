@@ -14,10 +14,14 @@ from langchain_community.embeddings import SentenceTransformerEmbeddings
 from sentence_transformers import SentenceTransformer
 from chromadb.config import Settings
 # Initialize Chroma
-client = chromadb.Client(Settings(persist_directory="db/"))
+client = chromadb.PersistentClient(path="db/")
 collection = client.get_or_create_collection("profile_summarization")
 model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-langchain_chroma = Chroma(persist_directory="db/", embedding_function=model)
+langchain_chroma = Chroma(
+    client=client,
+    collection_name="profile_summarization",
+    embedding_function=model
+)
 
 
 lm = dspy.GROQ(model='mixtral-8x7b-32768', api_key ="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",max_tokens=1000 )
