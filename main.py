@@ -15,7 +15,7 @@ from sentence_transformers import SentenceTransformer
 from chromadb.config import Settings
 # Initialize Chroma
 client = chromadb.Client(Settings(persist_directory="db/"))
-collection = client.create_collection("profile_summarization")
+collection = client.get_or_create_collection("profile_summarization")
 model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 langchain_chroma = Chroma(
     client=client,
