@@ -74,8 +74,8 @@ date = "10th September, 2024"
 question = f"""From the given list of key technologies and list of person who might be interested in the course:{promotion_keywords}
            Extract individuals from the context, who may be interested in the attending the course. Generate for each individual personal invitation
            Invitation must contain the date of this event:{date} and the and following discount offer: `hurry up to buy a ticket with a discount of up to 25% until 28th June 2024`
-           Response must contain full name, explanation of why you have chosen that person and personal invitation
-            """
+           Response must  must consist only of : full name, explanation of why you have chosen that person and personal invitation
+           The skills of the choosen individuals should be directly related to the domain of the course"""
 # Button to trigger the RAG model
 if st.button("Generate Answer"):
     if question:
