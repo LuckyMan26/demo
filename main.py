@@ -41,7 +41,6 @@ class RAG(dspy.Module):
 st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
 if api_key:
-    openai.api_key = api_key
     os.environ['OPENAI_API_KEY'] = api_key
 # Input box for the question
 uploaded_file = st.file_uploader("Choose a file", type=["json"])
