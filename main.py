@@ -82,11 +82,14 @@ question = f"""From the given list of key technologies and list of person who mi
            Keep in mind that personal invitation should contain specific reason why this person needs to enroll on this course
            Response should contain nothing more"""
 # Button to trigger the RAG model
+client = chromadb.Client()
+collections = client.list_collections()
+for collection in collections:
+    client.delete_collection(collection['name'])
 if st.button("Generate Answer"):
     list_of_answers = []
     if question:
         # Get the answer from the RAG model
-        client = chromadb.Client()
 
         counter = create_db(uploaded_files,client=client)
 
