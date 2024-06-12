@@ -43,7 +43,7 @@ api_key = st.text_input("Enter OpenAI API key:", type="password")
 if api_key:
     os.environ['OPENAI_API_KEY'] = api_key
 # Input box for the question
-uploaded_file = st.file_uploader("Choose a file", type=["json"])
+uploaded_file = st.file_uploader("Choose a file", type=["json"], accept_multiple_files=True)
 if uploaded_file is not None:
     # Process the uploaded file here
     # For simplicity, we'll assume it's a text file
