@@ -31,7 +31,6 @@ def create_db_collection(results,names,collection):
 
 def create_db(json_list,client, batch_size=50):
     counter = 0
-    client = chromadb.PersistentClient(path="db/")
     for i in range(0, len(json_list), batch_size):
         batch = json_list[i:i + batch_size]
         results,names = process_json_batch(batch,client)
