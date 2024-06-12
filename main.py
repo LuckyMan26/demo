@@ -43,12 +43,13 @@ api_key = st.text_input("Enter OpenAI API key:", type="password")
 if api_key:
     os.environ['OPENAI_API_KEY'] = api_key
 # Input box for the question
-uploaded_file = st.file_uploader("Choose a file", type=["json"], accept_multiple_files=True)
-if uploaded_file is not None:
-    # Process the uploaded file here
-    # For simplicity, we'll assume it's a text file
-    text = uploaded_file.read().decode("utf-8")
-    st.text_area("File content", text, height=250)
+uploaded_files  = st.file_uploader("Choose a file", type=["json"], accept_multiple_files=True)
+file_contents = []
+file_names = []
+if uploaded_files is not None:
+    for uploaded_file in uploaded_files:
+        file_names.append(uploaded_file.name)
+
 
 promotion_keywords = f"""Technologies and skills taught during the course:
 
@@ -85,7 +86,7 @@ if st.button("Generate Answer"):
     list_of_answers = []
     if question:
         # Get the answer from the RAG model
-        counter = create_db(uploaded_file)
+        counter = create_db(file_names)
         for i in range(counter):
             client = chromadb.PersistentClient(path="db/")
             langchain_chroma = Chroma(
