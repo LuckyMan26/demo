@@ -98,10 +98,12 @@ if st.button("Generate Answer"):
                 embedding_function=model)
             rag_model = RAG(langchain_chroma=langchain_chroma)
             prediction = rag_model.forward(question)
+
             list_of_answers.append(prediction.answer)
 
         st.subheader("Answer:")
-        st.write(str(list_of_answers))
+        for answer in list_of_answers:
+            st.write(answer)
     else:
         st.write("Please enter a question.")
 
