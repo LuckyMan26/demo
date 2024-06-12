@@ -44,9 +44,10 @@ rag_model = RAG()
 
 # Streamlit app
 st.title("RAG-based Question Answering")
+api_key = st.text_input("Enter OpenAI API key:", type="password")
 
 # Input box for the question
-uploaded_file = st.file_uploader("Choose a file", type=["txt", "pdf", "docx"])
+uploaded_file = st.file_uploader("Choose a file", type=["json"])
 if uploaded_file is not None:
     # Process the uploaded file here
     # For simplicity, we'll assume it's a text file

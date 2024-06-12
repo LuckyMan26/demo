@@ -12,3 +12,5 @@ sentence-transformers==2.2.2
 langchain
 langchain-community
 pysqlite3-binary
+openai
+langchain_text_splitters
