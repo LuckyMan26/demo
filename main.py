@@ -1,4 +1,5 @@
 # This is a sample Python script.
+from chroma_db import create_db
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -27,7 +28,7 @@ langchain_chroma = Chroma(
 lm = dspy.GROQ(model='mixtral-8x7b-32768', api_key ="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",max_tokens=1000 )
 dspy.configure(lm=lm)
 class RAG(dspy.Module):
-    def __init__(self, num_passages=3):
+    def __init__(self, langchain_chroma, num_passages=3):
         super().__init__()
         self.retrieve = langchain_chroma
         self.generate_answer = dspy.ChainOfThought("context, question -> answer")
@@ -40,11 +41,12 @@ class RAG(dspy.Module):
 
 
 # Instantiate the RAG model
-rag_model = RAG()
+
 
 # Streamlit app
 st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
+openai.api_key = api_key
 
 # Input box for the question
 uploaded_file = st.file_uploader("Choose a file", type=["json"])
@@ -86,13 +88,23 @@ question = f"""From the given list of key technologies and list of person who mi
            Response should contain nothing more"""
 # Button to trigger the RAG model
 if st.button("Generate Answer"):
+    list_of_answers = []
     if question:
         # Get the answer from the RAG model
-        prediction = rag_model.forward(question)
-
+        counter = create_db(uploaded_file)
+        for i in range(counter):
+            client = chromadb.PersistentClient(path="db/")
+            langchain_chroma = Chroma(
+                client=client,
+                collection_name=f"profile_summarization_{counter}",
+                embedding_function=model
+            )
+            rag_model = RAG(langchain_chroma=langchain_chroma)
+            prediction = rag_model.forward(question)
+            list_of_answers.append(prediction.answer)
 
         st.subheader("Answer:")
-        st.write(prediction.answer)
+        st.write(str(list_of_answers))
     else:
         st.write("Please enter a question.")
 

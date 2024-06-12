@@ -2,6 +2,8 @@ import json
 from langchain_text_splitters import RecursiveJsonSplitter
 from openai import OpenAI
 import openai
+from langchain.vectorstores import Chroma
+
 splitter = RecursiveJsonSplitter(max_chunk_size=3000)
 
 client = OpenAI()
@@ -65,7 +67,3 @@ def process_file(item_path):
     return res, data['fullName']
 
 
-for i in range(10):
-  result,name = process_file(file_paths[i])
-  results.append(result)
-  names.append(name)
