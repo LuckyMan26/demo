@@ -16,15 +16,8 @@ from langchain_community.embeddings import SentenceTransformerEmbeddings
 from sentence_transformers import SentenceTransformer
 from chromadb.config import Settings
 # Initialize Chroma
-client = chromadb.PersistentClient(path="db/")
-collection = client.get_or_create_collection("profile_summarization")
-model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-langchain_chroma = Chroma(
-    client=client,
-    collection_name="profile_summarization",
-    embedding_function=model
-)
 
+model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 lm = dspy.GROQ(model='mixtral-8x7b-32768', api_key ="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",max_tokens=1000 )
 dspy.configure(lm=lm)
@@ -49,7 +42,7 @@ st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
 if api_key:
     openai.api_key = api_key
-    os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
+    os.environ['OPENAI_API_KEY'] = api_key
 # Input box for the question
 uploaded_file = st.file_uploader("Choose a file", type=["json"])
 if uploaded_file is not None:
