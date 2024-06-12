@@ -86,7 +86,7 @@ if st.button("Generate Answer"):
     list_of_answers = []
     if question:
         # Get the answer from the RAG model
-        client = chromadb.PersistentClient(path="db/")
+        client = chromadb.Client()
 
         counter = create_db(uploaded_files,client=client)
 
@@ -94,7 +94,7 @@ if st.button("Generate Answer"):
 
             langchain_chroma = Chroma(
                 client=client,
-                collection_name=f"profile_summarization_{counter}",
+                collection_name=f"profile_summarization_{i}",
                 embedding_function=model)
             rag_model = RAG(langchain_chroma=langchain_chroma)
             prediction = rag_model.forward(question)
