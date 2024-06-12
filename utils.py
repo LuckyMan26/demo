@@ -9,7 +9,6 @@ from langchain.vectorstores import Chroma
 
 splitter = RecursiveJsonSplitter(max_chunk_size=3000)
 
-client = OpenAI()
 def process_separate_chunk(chunk:str)->str:
     completion = client.chat.completions.create(
       model="gpt-3.5-turbo",
