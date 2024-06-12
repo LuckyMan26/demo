@@ -83,7 +83,9 @@ question = f"""From the given list of key technologies and list of person who mi
            Response should contain nothing more"""
 # Button to trigger the RAG model
 client = chromadb.Client()
-client.reset()
+collections = client.list_collections()
+for collection in collections:
+    client.delete_collection(collection.name)
 if st.button("Generate Answer"):
     list_of_answers = []
     if question:
