@@ -47,12 +47,8 @@ st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
 
 # Input box for the question
-uploaded_file = st.file_uploader("Choose a file", type=["json"])
-if uploaded_file is not None:
-    # Process the uploaded file here
-    # For simplicity, we'll assume it's a text file
-    text = uploaded_file.read().decode("utf-8")
-    st.text_area("File content", text, height=250)
+#uploaded_file = st.file_uploader("Choose a file", type=["json"])
+
 
 promotion_keywords = f"""Technologies and skills taught during the course:
 
