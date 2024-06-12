@@ -47,8 +47,9 @@ class RAG(dspy.Module):
 # Streamlit app
 st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
-openai.api_key = api_key
-os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
+if api_key:
+    openai.api_key = api_key
+    os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
 # Input box for the question
 uploaded_file = st.file_uploader("Choose a file", type=["json"])
 if uploaded_file is not None:
