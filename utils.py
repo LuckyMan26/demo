@@ -60,7 +60,8 @@ def clear_json(json:str)->str:
 
 def process_file(uploaded_file, client):
     file_content = uploaded_file.read().decode("utf-8")
-    data = clear_json(file_content)
+    data = json.loads(file_content)
+    data = clear_json(data)
     json_chunks = splitter.split_json(json_data=data, convert_lists=True)
     chunk_res = [process_separate_chunk(chunk,client) for chunk in json_chunks]
     res = merge_chunks(chunk_res,client)
