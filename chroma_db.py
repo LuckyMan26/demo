@@ -7,8 +7,7 @@ from chromadb.config import Settings
 from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from utils import process_file
 
-client  = chromadb.PersistentClient(path="db/")
-collection = client.create_collection("profile_summarization")
+
 model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 
