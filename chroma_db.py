@@ -5,7 +5,6 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 from chromadb.config import Settings
 from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-
 from utils import process_file
 
 client  = chromadb.PersistentClient(path="db/")

@@ -1,5 +1,6 @@
 # This is a sample Python script.
 from chroma_db import create_db
+import os
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -47,7 +48,7 @@ class RAG(dspy.Module):
 st.title("RAG-based Question Answering")
 api_key = st.text_input("Enter OpenAI API key:", type="password")
 openai.api_key = api_key
-
+os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
 # Input box for the question
 uploaded_file = st.file_uploader("Choose a file", type=["json"])
 if uploaded_file is not None:
