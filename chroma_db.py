@@ -12,11 +12,11 @@ model = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 
 
-def process_json_batch(file_paths,client):
+def process_json_batch(file_paths):
     results = []
     names = []
     for i in range(len(file_paths)):
-        result, name = process_file(file_paths[i],client)
+        result, name = process_file(file_paths[i])
         results.append(result)
         names.append(name)
     return results,names
@@ -33,7 +33,7 @@ def create_db(json_list,client, batch_size=50):
     counter = 0
     for i in range(0, len(json_list), batch_size):
         batch = json_list[i:i + batch_size]
-        results,names = process_json_batch(batch,client)
+        results,names = process_json_batch(batch)
         collection = client.create_collection(f"profile_summarization_{counter}")
         create_db_collection(results=results,names=names,collection=collection)
         counter+=1

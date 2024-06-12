@@ -8,15 +8,16 @@ import openai
 from langchain.vectorstores import Chroma
 
 splitter = RecursiveJsonSplitter(max_chunk_size=3000)
-def process_separate_chunk(chunk:str, client)->str:
+def process_separate_chunk(chunk:str)->str:
+    client = OpenAI()
     completion = client.chat.completions.create(
       model="gpt-3.5-turbo",
      messages=[
     {"role": "system", "content": "You are assistant. From the given profile extract key technologies and domains with which person has already work or want to learn in the future. Use only information given in the input"},
     {"role": "user", "content": f"Profile: {chunk}"}])
     return completion.choices[0].message.content
-def merge_chunks(chunks:list[str], client)->str:
-
+def merge_chunks(chunks:list[str])->str:
+  client = OpenAI()
   completion = client.chat.completions.create(
      model="gpt-3.5-turbo",
      messages=[
@@ -58,13 +59,13 @@ def clear_json(json:str)->str:
       del education['school']
   return json
 
-def process_file(uploaded_file, client):
+def process_file(uploaded_file):
     file_content = uploaded_file.read().decode("utf-8")
     data = json.loads(file_content)
     data = clear_json(data)
     json_chunks = splitter.split_json(json_data=data, convert_lists=True)
-    chunk_res = [process_separate_chunk(chunk,client) for chunk in json_chunks]
-    res = merge_chunks(chunk_res,client)
+    chunk_res = [process_separate_chunk(chunk) for chunk in json_chunks]
+    res = merge_chunks(chunk_res)
     return res, data['fullName']
 
 
